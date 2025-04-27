@@ -2,18 +2,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
+import AdminProfile from '../pages/AdminProfile';
+import PrivateRoute from '../components/PrivateRoute';
 
 const AppRoutes = () => {
   return (
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
-        
-        {/* <Route path="/student/:id" element={<StudentProfile />} />
-        <Route path="/faculty/:id" element={<FacultyProfile />} />
-        <Route path="/admin/:id" element={<AdminProfile />} />
-        <Route path="/courses/:id" element={<CoursePage />} />
-        <Route path="/departments/:id" element={<DepartmentPage />} /> */}
+
+        <Route
+      path="/*"
+      element={
+        <PrivateRoute>
+          <Routes>
+            <Route path="/admin-dashboard" element={<AdminProfile />} />
+            <Route path="/admin-dashboard/add-student" element={<StudentForm />} />
+            <Route path="/admin-dashboard/add-faculty" element={<FacultyForm />} />
+            {/* You can continue adding more protected routes here */}
+          </Routes>
+        </PrivateRoute>
+      }
+    />
+
+        {/* Add more protected routes the same way */}
       </Routes>
     </Router>
   );
